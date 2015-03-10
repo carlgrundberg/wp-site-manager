@@ -1,16 +1,16 @@
 {
-  name: "menmo/site-manager",
-  description: "A plugin for managing the wp-site table.",
-  keywords: [
+  "name": "menmo/site-manager",
+  "description": "A plugin for managing the wp-site table.",
+  "keywords": [
     "wordpress",
     "plugin",
     "multisite"
   ],
-  type: "wordpress-plugin",
-  repositories: [
+  "type": "wordpress-plugin",
+  "repositories": [
     {
-      type: "vcs",
-      url: "https://github.com/menmo/wp-site-manager"
+      "type": "vcs",
+      "url": "https://github.com/menmo/wp-site-manager"
     }
   ]
 }
