@@ -1,14 +1,13 @@
 <?php
 
 /**
-Plugin Name: MU Multi-Site
-Plugin URI: http://www.jerseyconnect.net/development/
-Description: Adds a Sites panel for site admins to create and manipulate multiple sites.
-Version: 0.0.9
-Author: David Dean
-Author URI: http://www.jerseyconnect.net/
+Plugin Name: Site Manager
+Plugin URI: https://github.com/menmo/wp-site-manager
+Description: Adds a Sites panel for site admins to create and manipulate multiple sites. Heavily based on a plugin named 'MU Multi-Site' by David Dean (http://www.jerseyconnect.net/)
+Version: 1.0.0
+Author: Menmo AB
+Author URI: http://www.menmo.se/
  */
-
 /* ========================================================================== */
 
 /*
