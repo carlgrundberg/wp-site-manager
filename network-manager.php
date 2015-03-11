@@ -1,9 +1,9 @@
 <?php
 
 /**
-Plugin Name: Site Manager
-Plugin URI: https://github.com/menmo/wp-site-manager
-Description: Adds a Sites panel for site admins to create and manipulate multiple sites. Heavily based on a plugin named 'MU Multi-Site' by David Dean (http://www.jerseyconnect.net/)
+Plugin Name: Network Manager
+Plugin URI: https://github.com/menmo/wp-network-manager
+Description: Adds a panel for site admins to create and manipulate multiple networks. Heavily based on a plugin named 'MU Multi-Site' by David Dean (http://www.jerseyconnect.net/)
 Version: 1.0.0
 Author: Menmo AB
 Author URI: http://www.menmo.se/
@@ -546,14 +546,13 @@ class dd_Sites
 
     function add_sites_menu()
     {
-        add_submenu_page('sites.php', __('Domains'), __('Domains'), 'manage_sites', 'domains', array(&$this, 'sites_page'));
+        add_submenu_page('sites.php', __('Networks'), __('Networks'), 'manage_sites', 'network-manager', array(&$this, 'sites_page'));
     }
 
     /** ====== config_page ====== */
     function sites_page()
     {
         global $wpdb;
-        global $wpmuBaseTablePrefix;
         global $options_to_copy;
 
         if ( !is_super_admin() ) {
@@ -683,7 +682,7 @@ class dd_Sites
 
                 ?>
 
-<h2><?php _e ('Sites') ?></h2>
+<h2><?php _e ('Networks') ?></h2>
 <form name="searchform" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="get" style="position: absolute; right: 0pt; top: 0pt;">
 	<input type="text" name="s" />
 	<input type="hidden" name="page" value="sites" />
@@ -770,7 +769,7 @@ class dd_Sites
                                     break;
                                 case 'blogs':
                                     ?>
-                                    <td valign='top'><a href="http://<?php echo $blog['domain'] . $blog['blog_path'];?>wp-admin/wpmu-blogs.php" title="<?php _e('Blogs on this site'); ?>"><?php echo $blog['blogs'] ?></a></td>
+                                    <td valign='top'><a href="http://<?php echo $blog['domain'] . $blog['blog_path'];?>wp-admin/network/sites.php" title="<?php _e('Blogs on this site'); ?>"><?php echo $blog['blogs'] ?></a></td>
                                     <?php
                                     break;
                                 case 'control_edit':
@@ -811,7 +810,7 @@ class dd_Sites
                 ?>
 </table>
 </form>
-<h2><?php _e('Add Site'); ?></h2>
+<h2><?php _e('Add Network'); ?></h2>
 <form method="POST" action="<?php echo $_SERVER['REQUEST_URI'] . "&amp;action=addsite"; ?>">
 	<table class="form-table">
 		<tr><th scope="row"><label for="newName"><?php _e('Site Name'); ?>:</label></th><td><input type="text" name="name" id="newName" title="<?php _e('A friendly name for your new site'); ?>" /></td></tr>
@@ -970,7 +969,7 @@ jQuery('.postbox').children('h3').click(function() {
                 <div>
                     <input type="hidden" name="from" value="<?php echo $blog->site_id; ?>" />
                     <input class="button" type="submit" name="move" value="<?php _e('Move Blog'); ?>" />
-                    <a class="button" href="./wpmu-blogs.php"><?php _e('Cancel'); ?></a>
+                    <a class="button" href="./sites.php"><?php _e('Cancel'); ?></a>
                 </div>
             </form>
         <?php
@@ -1027,12 +1026,11 @@ jQuery('.postbox').children('h3').click(function() {
                 die(__('Blog table inaccessible.'));
             }
             foreach($blogs as $key => $blog) {
-                $tableName = $wpmuBaseTablePrefix . (int)$blog->blog_id . "_options";
-                $blog_name = $wpdb->get_row("SELECT * FROM $tableName WHERE option_name='blogname'");
+                $blog_name = get_blog_option($blog->blog_id, 'blogname');
                 if(!$blog_name) {
                     die(__('Invalid blog.'));
                 }
-                $blogs[$key]->name = stripslashes($blog_name->option_value);
+                $blogs[$key]->name = stripslashes($blog_name);
             }
             ?>
             <h2><?php _e('Assign Blogs to'); ?>: <?php echo $site->domain . $site->path ?></h2>
@@ -1092,7 +1090,7 @@ jQuery('.postbox').children('h3').click(function() {
                     <br />
                 <?php } ?>
                 <input type="submit" name="reassign" value="<?php _e('Update Assigments'); ?>" class="button" />
-                <a href="./wpmu-admin.php?page=sites"><?php _e('Cancel'); ?></a>
+                <a href="./sites.php?page=network-manager"><?php _e('Cancel'); ?></a>
             </form>
             <script type="text/javascript">
                 if(document.getElementById) {
