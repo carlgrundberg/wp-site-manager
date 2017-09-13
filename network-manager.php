@@ -530,7 +530,7 @@ if(!function_exists('move_blog')) {
 class dd_Sites
 {
 
-    function dd_Sites()
+    function __construct()
     {
         if(function_exists('add_action')) {
             add_action('network_admin_menu', array(&$this, 'add_sites_menu'));
